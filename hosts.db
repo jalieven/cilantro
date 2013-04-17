@@ -1,0 +1,19 @@
+jalie@multivac
+	memory-os					free -m | awk '/Mem:/ {print $4}'				megabytes		Free Memory			30 minutes ago				true
+	cpu-os						cat /proc/loadavg | awk '{ print $1 }'			1 min avg		OS CPU Load			30 minutes ago				true
+	io-read						iostat -m | awk '$1 ~ /sda/ { print $3 }'		megabytes		SDA IO read/s		30 minutes ago				true
+	io-write					iostat -m | awk '$1 ~ /sda/ { print $4 }'		megabytes		SDA IO write/s		30 minutes ago				true
+	cpu-idle					mpstat | awk '/ all / {print $NF}'											%				OS CPU Idle time			15 minutes ago		true
+	cpu-erlang-uptime			'ps -o "%cpu" $(pgrep beam) | sed -n 2p'									%/uptime		JVM CPU %/uptime usage		15 minutes ago		true
+	cpu-erlang-current			'top -b -n 1 -p $(pgrep beam) | awk "/$(pgrep beam)/ {print \$9}"'			%				JVM CPU % current usage		15 minutes ago		true
+
+jalie@localhost
+	memory-os					free -m | awk '/Mem:/ {print $4}'				megabytes		Free Memory			30 minutes ago				true
+	cpu-os						cat /proc/loadavg | awk '{ print $1 }'			1 min avg		OS CPU Load			30 minutes ago				true
+	io-read						iostat -m | awk '$1 ~ /sda/ { print $3 }'		megabytes		SDA IO read/s		30 minutes ago				true
+	io-write					iostat -m | awk '$1 ~ /sda/ { print $4 }'		megabytes		SDA IO write/s		30 minutes ago				true
+	cpu-idle					mpstat | awk '/ all / {print $NF}'												%				OS CPU Idle time			15 minutes ago		true
+	cpu-jvm-uptime				'ps -o "%cpu" $(pgrep webstorm) | sed -n 2p'									%/uptime		JVM CPU %/uptime usage		15 minutes ago		true
+	cpu-jvm-current				'top -b -n 1 -p $(pgrep webstorm) | awk "/$(pgrep webstorm)/ {print \$9}"'		%				JVM CPU % current usage		15 minutes ago		true
+	jvm-full-gc					'jstat -gc $(jps -l | grep -i "main" | awk "{ print \$1 }") 100 1 | sed -n 2p | awk "{print \$13}"'		events			Full GC events			15 minutes ago	false
+	jvm-gc-time					'jstat -gc $(jps -l | grep -i "main" | awk "{ print \$1 }") 100 1 | sed -n 2p | awk "{print \$15}"'		seconds			Total GC time			15 minutes ago 	false

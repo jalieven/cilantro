@@ -1,0 +1,65 @@
+logstash@logstash-on-1-mgt
+	memory-os			free -m | awk '/Mem:/ {print $4}'											megabytes		Free Memory			15 minutes ago		true
+	cpu-os				cat /proc/loadavg | awk '{ print $1 }'										1 min avg		OS CPU Load 		15 minutes ago		true
+	cpu-idle			mpstat | awk '/ all / {print $NF}'											%				OS CPU Idle time	15 minutes ago		true
+	cpu-jvm-uptime		'ps -o "%cpu" $(pgrep java) | sed -n 2p'									%/uptime		JVM CPU %/uptime usage		15 minutes ago		true
+	cpu-jvm-current		'top -b -n 1 -p $(pgrep java) | awk "/$(pgrep java)/ {print \$9}"'			%				JVM CPU % current usage		15 minutes ago		true
+	io-read				iostat -m | awk '$1 ~ /sda/ { print $3 }'									megabytes		SDA IO read/s		15 minutes ago		true
+	io-write			iostat -m | awk '$1 ~ /sda/ { print $4 }'									megabytes		SDA IO write/s		15 minutes ago		true
+	jvm-es				'jstat -gc $(jps -l | grep -i "logstash" | awk "{ print \$1 }") 100 1 | awk "\$1 !~ /S0C/ {print \$5}"'	kilobytes	Current Eden Space	15 minutes ago	true
+	jvm-full-gc			'jstat -gc $(jps -l | grep -i "logstash" | awk "{ print \$1 }") 100 1 | sed -n 2p | awk "{print \$13}"'	events		Full GC events		15 minutes ago	false
+	jvm-gc-time			'jstat -gc $(jps -l | grep -i "logstash" | awk "{ print \$1 }") 100 1 | sed -n 2p | awk "{print \$15}"'	seconds		Total GC time		15 minutes ago	false
+
+logstash@logstash-on-2-mgt
+	memory-os			free -m | awk '/Mem:/ {print $4}'											megabytes		Free Memory			15 minutes ago		true
+	cpu-os				cat /proc/loadavg | awk '{ print $1 }'										1 min avg		OS CPU Load			15 minutes ago		true
+	cpu-idle			mpstat | awk '/ all / {print $NF}'											%				OS CPU Idle time	15 minutes ago		true
+	cpu-jvm-uptime		'ps -o "%cpu" $(pgrep java) | sed -n 2p'									%/uptime		JVM CPU %/uptime usage		15 minutes ago		true
+	cpu-jvm-current		'top -b -n 1 -p $(pgrep java) | awk "/$(pgrep java)/ {print \$9}"'			%				JVM CPU % current usage		15 minutes ago		true
+	io-read				iostat -m | awk '$1 ~ /sda/ { print $3 }'									megabytes		SDA IO read/s		15 minutes ago		true
+	io-write			iostat -m | awk '$1 ~ /sda/ { print $4 }'									megabytes		SDA IO write/s		15 minutes ago		true
+	jvm-es				'jstat -gc $(jps -l | grep -i "logstash" | awk "{ print \$1 }") 100 1 | awk "\$1 !~ /S0C/ {print \$5}"'	kilobytes	Current Eden Space	15 minutes ago	true
+	jvm-full-gc			'jstat -gc $(jps -l | grep -i "logstash" | awk "{ print \$1 }") 100 1 | sed -n 2p | awk "{print \$13}"'	events		Full GC events		15 minutes ago	false
+	jvm-gc-time			'jstat -gc $(jps -l | grep -i "logstash" | awk "{ print \$1 }") 100 1 | sed -n 2p | awk "{print \$15}"'	seconds		Total GC time		15 minutes ago 	false
+
+amqp@amqp-on-1-mgt
+	memory-os			free -m | awk '/Mem:/ {print $4}'											megabytes		Free Memory			15 minutes ago		true
+	cpu-os				cat /proc/loadavg | awk '{ print $1 }'										1 min avg		OS CPU Load			15 minutes ago		true
+	cpu-idle			mpstat | awk '/ all / {print $NF}'											%				OS CPU Idle time	15 minutes ago		true
+	io-read				iostat -m | awk '$1 ~ /sda/ { print $3 }'									megabytes		SDA IO read/s		15 minutes ago		true
+	io-write			iostat -m | awk '$1 ~ /sda/ { print $4 }'									megabytes		SDA IO write/s		15 minutes ago		true
+	cpu-erlang-uptime	'ps -o "%cpu" $(pgrep beam) | sed -n 2p'									%				ERLANG CPU %/uptime usage	15 minutes ago		true
+	cpu-erlang-current	'top -b -n 1 -p $(pgrep beam) | awk "/$(pgrep beam)/ {print \$9}"'			%				ERLANG CPU % current usage	15 minutes ago		true
+
+amqp@amqp-on-2-mgt
+	memory-os			free -m | awk '/Mem:/ {print $4}'											megabytes		Free Memory			15 minutes ago		true
+	cpu-os				cat /proc/loadavg | awk '{ print $1 }'										1 min avg		OS CPU Load			15 minutes ago		true
+	cpu-idle			mpstat | awk '/ all / {print $NF}'											%				OS CPU Idle time	15 minutes ago		true
+	io-read				iostat -m | awk '$1 ~ /sda/ { print $3 }'									megabytes		SDA IO read/s		15 minutes ago		true
+	io-write			iostat -m | awk '$1 ~ /sda/ { print $4 }'									megabytes		SDA IO write/s		15 minutes ago		true
+	cpu-erlang-uptime	'ps -o "%cpu" $(pgrep beam) | sed -n 2p'									%/uptime		ERLANG CPU %/uptime usage	15 minutes ago		true
+	cpu-erlang-current	'top -b -n 1 -p $(pgrep beam) | awk "/$(pgrep beam)/ {print \$9}"'			%				ERLANG CPU % current usage	15 minutes ago		true
+
+elasticsearch@elasticsearch-on-1-mgt
+	memory-os			free -m | awk '/Mem:/ {print $4}'											megabytes		Free Memory			15 minutes ago		true
+	cpu-os				cat /proc/loadavg | awk '{ print $1 }'										1 min avg		OS CPU Load			15 minutes ago		true
+	cpu-idle			mpstat | awk '/ all / {print $NF}'											%				OS CPU Idle time	15 minutes ago		true
+	cpu-jvm-uptime		'ps -o "%cpu" $(pgrep java) | sed -n 2p'									%/uptime		JVM CPU %/uptime usage		15 minutes ago		true
+	cpu-jvm-current		'top -b -n 1 -p $(pgrep java) | awk "/$(pgrep java)/ {print \$9}"'			%				JVM CPU % current usage		15 minutes ago		true
+	io-read				iostat -m | awk '$1 ~ /sda/ { print $3 }'									megabytes		SDA IO read/s		15 minutes ago		true
+	io-write			iostat -m | awk '$1 ~ /sda/ { print $4 }'									megabytes		SDA IO write/s		15 minutes ago		true
+	jvm-es				'jstat -gc $(jps -l | grep -i "elasticsearch" | awk "{ print \$1 }") 100 1 | awk "\$1 !~ /S0C/ {print \$5}"'	kilobytes	Current Eden Space	15 minutes ago	true
+	jvm-full-gc			'jstat -gc $(jps -l | grep -i "elasticsearch" | awk "{ print \$1 }") 100 1 | sed -n 2p | awk "{print \$13}"'	events		Full GC events		15 minutes ago	false
+	jvm-gc-time			'jstat -gc $(jps -l | grep -i "elasticsearch" | awk "{ print \$1 }") 100 1 | sed -n 2p | awk "{print \$15}"'	seconds		Total GC time		15 minutes ago 	false
+
+elasticsearch@elasticsearch-on-2-mgt
+	memory-os			free -m | awk '/Mem:/ {print $4}'											megabytes		Free Memory			15 minutes ago		true
+	cpu-os				cat /proc/loadavg | awk '{ print $1 }'										1 min avg		OS CPU Load			15 minutes ago		true
+	cpu-idle			mpstat | awk '/ all / {print $NF}'											%				OS CPU Idle time	15 minutes ago		true
+	cpu-jvm-uptime		'ps -o "%cpu" $(pgrep java) | sed -n 2p'									%/uptime		JVM CPU %/uptime usage		15 minutes ago		true
+	cpu-jvm-current		'top -b -n 1 -p $(pgrep java) | awk "/$(pgrep java)/ {print \$9}"'			%				JVM CPU % current usage		15 minutes ago		true
+	io-read				iostat -m | awk '$1 ~ /sda/ { print $3 }'									megabytes		SDA IO read/s		15 minutes ago		true
+	io-write			iostat -m | awk '$1 ~ /sda/ { print $4 }'									megabytes		SDA IO write/s		15 minutes ago		true
+	jvm-es				'jstat -gc $(jps -l | grep -i "elasticsearch" | awk "{ print \$1 }") 100 1 | awk "\$1 !~ /S0C/ {print \$5}"'	kilobytes	Current Eden Space	15 minutes ago	true
+	jvm-full-gc			'jstat -gc $(jps -l | grep -i "elasticsearch" | awk "{ print \$1 }") 100 1 | sed -n 2p | awk "{print \$13}"'	events		Full GC events		15 minutes ago	false
+	jvm-gc-time			'jstat -gc $(jps -l | grep -i "elasticsearch" | awk "{ print \$1 }") 100 1 | sed -n 2p | awk "{print \$15}"'	seconds		Total GC time		15 minutes ago 	false
